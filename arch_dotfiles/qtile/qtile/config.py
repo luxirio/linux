@@ -138,7 +138,7 @@ layouts = [
         margin = 5, 
         border_focus = everforest["selection"],
         border_normal = everforest["background"],
-        border_width=22),
+        border_width=2),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -204,57 +204,6 @@ def get_widgets(primary = False):
             foreground=everforest["background"],
             background=everforest["background"],
         ),
-        widget.Battery(
-            fmt = "  {}", 
-            format = '{percent:2.0%}',
-            update_delay = 5,
-            foreground = everforest["fg1"],
-            background= everforest["background"]),
-        widget.TextBox(
-            text ="",
-            padding =-1,
-            fontsize =24,
-            foreground=everforest["background"],
-            background=everforest["background"],
-        ),
-        widget.Spacer(
-            length = 2,
-            background = everforest["background"],
-        ),
-
-
-        widget.TextBox(
-            text ="",
-            padding =-1,
-            fontsize =24,
-            foreground=everforest["background"],
-            background=everforest["background"],
-        ),
-        widget.Volume(
-            fmt = "墳 {}",
-            foreground = everforest["fg1"],
-            background = everforest["background"]
-        ),
-        widget.TextBox(
-            text ="",
-            padding =-1,
-            fontsize =24,
-            foreground=everforest["background"],
-            background=everforest["background"],
-        ),
-        widget.Spacer(
-            length = 2,
-            background = everforest["background"],
-        ),
-
-
-        widget.TextBox(
-            text ="",
-            padding =-1,
-            fontsize =24,
-            foreground=everforest["background"],
-            background=everforest["background"],
-        ),
         widget.Clock(
             format="%d/%m, %a, %I:%M %p",
             foreground = everforest["fg1"],
@@ -271,7 +220,8 @@ def get_widgets(primary = False):
     ]
 
     if primary:
-        widgets.insert(4, widget.Systray(background=everforest["background"]))
+        widgets.insert(4, widget.Systray(background=everforest["background"],
+        ))
     return widgets
 
 
