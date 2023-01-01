@@ -11,7 +11,7 @@ import os
 mod = "mod4"
 
 # Defining the terminal
-terminal = guess_terminal()
+terminal = 'alacritty'
 
 # Color theming
 everforest = {
@@ -188,7 +188,6 @@ def get_widgets(primary = False):
         ),
         widget.WindowName(
             fontsize = 13,
-            font = "JetBrainsMono Nerd Font Bold",
             foreground = everforest["grey"],
             background = everforest["background"]
         ),
@@ -253,7 +252,9 @@ dgroups_app_rules = []  # type: list
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
-floating_layout = layout.Floating(
+floating_layout = layout.Floating(border_normal = everforest["background"], 
+border_width = 1,
+border_focus = everforest["selection"],
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
@@ -264,8 +265,8 @@ floating_layout = layout.Floating(
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
     ],
-    border_focus = everforest["background"]
 )
+
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
@@ -293,3 +294,17 @@ def autostart():
     home = os.path.expanduser("~/.config/qtile/autostart.sh")
     subprocess.run([home])
 
+# Trying to create a gnome-session
+@hook.subscribe.startup
+def dbus_register():
+    id = os.environ.get('DESKTOP_AUTOSTART_ID')
+    if not id:
+        return
+    subprocess.Popen(['dbus-send',
+                      '--session',
+                      '--print-reply',
+                      '--dest=org.gnome.SessionManager',
+                      '/org/gnome/SessionManager',
+                      'org.gnome.SessionManager.RegisterClient',
+                      'string:qtile',
+                      'string:' + id])

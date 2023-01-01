@@ -15,6 +15,7 @@ run picom -b --experimental-backends --config ~/.config/qtile/picom.conf
 #run feh --bg-scale ~/Pictures/.wallpapers/dnd_bg.png
 
 # Run applets make sure to have them all installed
+run caffeine-indicator
 run xset led on
 run numlockx on
 run volumeicon
