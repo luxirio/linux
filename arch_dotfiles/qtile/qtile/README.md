@@ -4,7 +4,7 @@
 This is a W.I.P
 
 Current final theme:
-<iframe src="https://drive.google.com/file/d/1CWYycvL3bhsyBxaA142kVxjIgIrJXp-B/preview" width="640" height="480" allow="autoplay"></iframe>>)
+[!img](https://lh5.googleusercontent.com/gRuuupfg6ZLqWfCmq4tzUHZgYFxvVdqVvN2OAv2BjZkBSNPA3mX2drH0t3PSH8Gh0_k=w2400)
 
 **IMPORTANT**: Don't forget to do `chmod +x autostart.sh` on autostart.sh file in qtile folder to make it executable.
 
