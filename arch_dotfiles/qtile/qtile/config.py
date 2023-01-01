@@ -221,6 +221,8 @@ def get_widgets(primary = False):
 
     if primary:
         widgets.insert(4, widget.Systray(background=everforest["background"],
+        icon_size = 14,
+        padding = 7
         ))
     return widgets
 
