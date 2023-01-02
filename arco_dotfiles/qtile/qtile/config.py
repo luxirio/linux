@@ -55,7 +55,7 @@ keys = [
 
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
-    Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
+    Key([mod, "control"], "h", lazy.layout.grow_left(),  lazy.layout.grow(), desc="Grow window to the left"),
     Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
@@ -93,14 +93,16 @@ keys = [
 
 
 groups = [
+    Group("", layout="max"),
     Group("", layout="max"),
-    Group("", layout="max"),
-    Group(""),
-    Group(""),
+    Group(""),
+    Group(""),
     Group("ﳒ"),
+    Group(""),
+    Group(""),
     Group("")
 ]
-group_hotkeys = "123456"
+group_hotkeys = "12345678"
 
 for g, k in zip(groups, group_hotkeys):
     keys.extend(
@@ -171,10 +173,6 @@ def get_widgets(primary = False):
             length = 4,
             background = everforest["background"],
         ),
-        widget.CurrentLayout(
-            background=everforest["background"],
-            max_chars = 3,
-        ),
         widget.GroupBox(
             highlight_method = "line",
             background = everforest["background"],
@@ -196,10 +194,21 @@ def get_widgets(primary = False):
             background=everforest["background"]),
 
     # Right Widgets
+        widget.CurrentLayoutIcon(scale = 0.52, background = everforest["background"],
+        custom_icon_paths = [".config/qtile/icons/"]),
+        # widget.CurrentLayout(
+        #     background=everforest["background"],
+        #     max_chars = 3,
+        #     padding = 5,
+        # ),
+        widget.Spacer(
+            length = 4,
+            background = everforest["background"],
+        ),
         widget.TextBox(
             text ="",
             padding =-1,
-            fontsize =24,
+            fontsize =30,
             foreground=everforest["background"],
             background=everforest["background"],
         ),
@@ -211,15 +220,22 @@ def get_widgets(primary = False):
         widget.TextBox(
             text ="",
             padding =-1,
-            fontsize =24,
+            fontsize =10,
             foreground=everforest["background"],
             background=everforest["background"],
+        ),
+
+        widget.QuickExit(background=everforest["background"],
+        default_text=' ', countdown_format='[{}]', padding =5),
+                widget.Spacer(
+            length = 10,
+            background = everforest["background"],
         ),
 
     ]
 
     if primary:
-        widgets.insert(4, widget.Systray(background=everforest["background"],
+        widgets.insert(6, widget.Systray(background=everforest["background"],
         icon_size = 14,
         padding = 7
         ))
