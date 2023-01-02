@@ -4,7 +4,7 @@
 This is a W.I.P
 
 Current final theme:
-<img alt="Final Ricing" src="https://lh5.googleusercontent.com/gRuuupfg6ZLqWfCmq4tzUHZgYFxvVdqVvN2OAv2BjZkBSNPA3mX2drH0t3PSH8Gh0_k=w2400">
+<img alt="Final Ricing" src="https://lh5.googleusercontent.com/j6ZGKPih3vK-M0ksDGiyztcgadOjZC6OvsWE7bXH5lIDrGfgMU1cPhOZ2AAK2sphpbo=w2400">
 </picture>
 
 **IMPORTANT**: Don't forget to do `chmod +x autostart.sh` on autostart.sh file in qtile folder to make it executable.
