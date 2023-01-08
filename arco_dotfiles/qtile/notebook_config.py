@@ -5,12 +5,12 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.widget.backlight import Backlight
-from qtile_extras.popup.toolkit import (
-    PopupRelativeLayout,
-    PopupImage,
-    PopupText
-)
 
+# from qtile_extras.popup.toolkit import (
+#     PopupRelativeLayout,
+#     PopupImage,
+#     PopupText
+# )
 import subprocess
 import os
 
@@ -42,9 +42,6 @@ everforest = {
     "greybg":       "#3a4248",
     "black":        "#1d2124"
 }
-
-
-
 
 # Keys shortcus configs 
 # (I just basically change the super + w to super + q to kill the window)
@@ -107,11 +104,13 @@ groups = [
     Group("", layout="max"),
     Group("", layout="max"),
     Group(""),
-    Group(""),
+    Group(""),
     Group("ﳒ"),
-    Group("")
+    Group(""),
+    Group(""),
+    Group("")
 ]
-group_hotkeys = "123456"
+group_hotkeys = "12345678"
 
 for g, k in zip(groups, group_hotkeys):
     keys.extend(
@@ -203,7 +202,7 @@ def get_widgets(primary = False):
 
         # GroupBox
         widget.Spacer(
-            length = 4,
+            length = 5,
             background = everforest["background"],
         ),
         widget.GroupBox(
@@ -211,7 +210,7 @@ def get_widgets(primary = False):
             background = everforest["background"],
             font="JetBrainsMono Nerd Font",
             fontsize = 18,
-            spacing = 5,
+            spacing = 10,
             active = everforest["fg1"],
             highlight_color = [everforest["selection"],everforest["selection"]],
             this_current_screen_border = everforest["orange"],
@@ -222,14 +221,6 @@ def get_widgets(primary = False):
             background = everforest["background"],
         ),
 
-        # Current Layout Widget
-        # widget.TextBox(
-        #     text ="",
-        #     padding =-1,
-        #     fontsize =25,
-        #     foreground=everforest["greyblock"],
-        #     background=everforest["background"],
-        # ),
         widget.CurrentLayoutIcon(
             background=everforest["background"],
             max_chars = 3,
@@ -237,13 +228,6 @@ def get_widgets(primary = False):
             custom_icon_paths = [".config/qtile/icons/layout-icons"]
         ),
 
-        # widget.TextBox(
-        #     text ="",
-        #     padding =-1,
-        #     fontsize =25,
-        #     foreground=everforest["greyblock"],
-        #     background=everforest["background"],
-        # ),
         widget.Spacer(
             length = 15,
             background = everforest["background"],
@@ -281,7 +265,6 @@ def get_widgets(primary = False):
             background = everforest["background"],
         ),
 
-
         # Battery widget
         widget.TextBox(
             text ="",
@@ -294,13 +277,14 @@ def get_widgets(primary = False):
             update_delay = 5,
             foreground = everforest["fg1"],
             background= everforest["greyblock"],
-            scale = 2.0
+            theme_path = '/home/gustavo/.config/qtile/icons/battery_icons',
+            scale = 1.23
             ),
         widget.Battery( 
             update_delay = 5,
             foreground = everforest["fg1"],
             background= everforest["greyblock"],
-            format = " {percent:2.0%}",
+            format = " {percent:2.0%}",
             notify_below = 15,
             ),
         widget.TextBox(
