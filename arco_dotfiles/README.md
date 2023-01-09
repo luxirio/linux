@@ -9,8 +9,7 @@ A snapshot of the current final theme for my **PC** can be seen below:
 
 A snapshot of the current final theme for my **laptop** can be seen below:
 
-<img alt="Current Laptop Ricing" src="https://lh3.googleusercontent.com/GKi5qhh1B1EHcmNyOECIld6OKHCaM3rokCU5guaAEv9zJiuXqQLhPhCNYlwq70NjhCY=w2400
-">
+<img alt="Current Laptop Ricing" src="https://lh3.googleusercontent.com/GKi5qhh1B1EHcmNyOECIld6OKHCaM3rokCU5guaAEv9zJiuXqQLhPhCNYlwq70NjhCY=w2400">
 </picture>
 
 **IMPORTANT**: Don't forget to do `chmod +x autostart.sh` on autostart.sh file in qtile folder to make it executable.
