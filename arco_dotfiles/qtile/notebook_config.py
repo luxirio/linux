@@ -241,6 +241,7 @@ decoration_group_clock = {
     "padding": 10,}
 
 
+
 #Defining the widget function
 def get_widgets(primary = False):
     widgets = [
@@ -396,7 +397,7 @@ def get_widgets(primary = False):
 
 # Returning systray only if primary window
     if primary:
-        widgets.insert(11, widget.Systray(background=everforest["background"], padding=5)),
+        widgets.insert(11, widget.Systray(background=everforest["background"])),
         widgets.insert(12, widget.Spacer(length=10, background=everforest["background"]))
     return widgets
 
@@ -405,7 +406,7 @@ screens = [
     Screen(
         top=bar.Bar(
             get_widgets(primary = True),
-            30, opacity = 1,
+            35, opacity = 1,
             #border_width=[0, 0, 2, 0],  # Draw top and bottom borders
             #border_color=["ff00ff", "000000", everforest["greybg"], "000000"]  # Borders are magenta
         ),
