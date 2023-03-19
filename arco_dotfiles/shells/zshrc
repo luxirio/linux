@@ -8,7 +8,8 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git web-search zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git
+zsh-autosuggestions)
 
 #Colors of directories and stuff
 LS_COLORS=$LS_COLORS:'di=0;32:'  #to green
@@ -40,3 +41,4 @@ alias update-fc='sudo fc-cache -fv'
 # Arcolinux
 alias whichvga="/usr/local/bin/arcolinux-which-vga"
 
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#A7C080,bg=#2D353B,bold,underline"
