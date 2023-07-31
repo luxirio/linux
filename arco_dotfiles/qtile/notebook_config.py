@@ -152,7 +152,7 @@ for g, k in zip(groups, group_hotkeys):
 # This is the layouts available
 layouts = [
     layout.MonadTall(margin = 10, 
-        border_width = 2,
+        border_width = 3,
         border_focus = everforest["selection"],
         border_normal = everforest["background"]
     ),
@@ -160,7 +160,7 @@ layouts = [
         margin = 5, 
         border_focus = everforest["selection"],
         border_normal = everforest["background"],
-        border_width=2),
+        border_width=3),
     layout.Max(),
     layout.Floating(
         border_focus = everforest["selection"],
@@ -445,6 +445,8 @@ floating_layout = layout.Floating(
         Match(title="pinentry"),  # GPG key password entry
     ],
     border_focus = everforest["selection"],
+    border_normal = everforest["background"],
+    border_width = 2,
     
 )
 auto_fullscreen = True
