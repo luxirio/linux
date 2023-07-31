@@ -20,7 +20,7 @@ terminal = guess_terminal()
 
 # Color theming
 everforest = {
-    "background":   "#2D353B",
+    "background":   "#272e33",
     "bg_blue":      "#3A515D",
     "bg_dim":       "#232A2E",
     "bg_0":         "#2D353B",
@@ -46,6 +46,36 @@ everforest = {
     "greybg":       "#3a4248",
     "black":        "#1d2124"
 }
+
+github_theme = {
+    "background":   "#1f2428",
+    "bg_blue":      "#3A515D",
+    "bg_dim":       "#2D343A",
+    "bg_0":         "#171a1d",
+    "bg_1":         "#22272c",
+    "bg_2":         "#2d343a",
+    "bg_3":         "#394249",
+    "bg_4":         "#444f58",
+    "error":        "#514045",
+    "selection":    "#425047",
+    "fg1":          "#d7dce0",
+    "orange":       "#E69875",
+    "red":          "#E67E80",
+    "yellow":       "#DBBC7F",
+    "green":        "#A7C080",
+    "aqua":         "#83C092",
+    "aqua1":        "#648a6d",
+    "aqua2":        "#506e57",
+    "blue":         "#7FBBB3",
+    "purple":       "#D699B6",
+    "grey":         "#667683",
+    "greyblock":    "#2d343a",
+    "greyblock_dark":"#22272c",
+    "greybg":       "#2d343a",
+    "black":        "#1d2124"
+}
+
+
 
 # Keys shortcus configs 
 # (I just basically change the super + w to super + q to kill the window)
