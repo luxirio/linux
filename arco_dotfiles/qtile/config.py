@@ -19,16 +19,17 @@ terminal = guess_terminal()
 
 # Color theming
 everforest = {
-    "background":   "#2D353B",
+    "background":   "#161819",
     "bg_blue":      "#3A515D",
-    "bg_dim":       "#232A2E",
-    "bg_0":         "#2D353B",
-    "bg_1":         "#343F44",
-    "bg_2":         "#3D484D",
-    "bg_3":         "#475258",
-    "bg_4":         "#4F585E",
+    "bg_dim":       "#181B1C",
+    "bg_0":         "#1A1C1D",
+    "bg_1":         "#1B1D1E",
+    "bg_2":         "#1C1F20",
+    "bg_3":         "#1D2021",
+    "bg_4":         "#292B2C",
     "error":        "#514045",
     "selection":    "#425047",
+    "light_selection":"#829181",
     "fg1":          "#dcd1bb",
     "orange":       "#E69875",
     "red":          "#E67E80",
@@ -39,7 +40,7 @@ everforest = {
     "aqua2":        "#506e57",
     "blue":         "#7FBBB3",
     "purple":       "#D699B6",
-    "grey":         "#7A8478",
+    "grey":         "#595750",
     "greyblock":    "#565e65",
     "greyblock_dark":"#444B50",
     "greybg":       "#3a4248",
@@ -152,17 +153,18 @@ for g, k in zip(groups, group_hotkeys):
 layouts = [
     layout.MonadTall(margin = 10, 
         border_width = 3,
-        border_focus = everforest["selection"],
+        border_focus = everforest["light_selection"],
         border_normal = everforest["background"]
     ),
     layout.Columns(
         margin = 10, 
-        border_focus = everforest["selection"],
+        border_focus = everforest["light_selection"],
         border_normal = everforest["background"],
+        border_on_single = everforest["selection"],
         border_width=3),
     layout.Max(),
     layout.Floating(
-        border_focus = everforest["selection"],
+        border_focus = everforest["light_selection"],
         border_normal = everforest["background"],),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -179,7 +181,7 @@ layouts = [
 
 # Widgets defaults
 widget_defaults = dict(
-    font="JetBrainsMono Nerd Font Bold",
+    font="Hack Nerd Font Bold",
     fontsize=14,
     padding=3,
 )
@@ -191,7 +193,7 @@ class MyClock(widget.Clock):
     defaults = [
         (
             "long_format",
-            "  %d/%m/%y - %a, %I:%M %p",
+            "  %d/%m/%y - %a, %I:%M",
             "Format to show when mouse is over widget."
         )
     ]
@@ -249,23 +251,23 @@ def get_widgets(primary = False):
         widget.TextBox(
             text ="",
             padding =-1,
-            fontsize =28,
-            foreground=everforest["greybg"],
+            fontsize =26,
+            foreground=everforest["bg_2"],
             background=everforest["background"],
         ),
         widget.Image(
                 filename = "~/.config/qtile/icons/icon_forest.png",
                 scale = "True",
                 margin = 3,
-                background=everforest["greybg"],
+                background=everforest["bg_"],
                 mouse_callbacks = {'Button1': lazy.spawn("rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-11.rasi")},
                 **decoration_group_backlight
                 ),
         widget.TextBox(
             text ="",
             padding =-1,
-            fontsize =28,
-            foreground=everforest["greybg"],
+            fontsize =26,
+            foreground=everforest["bg_2"],
             background=everforest["background"],
         ),
 
@@ -279,15 +281,16 @@ def get_widgets(primary = False):
         foreground=everforest["grey"],
         background=everforest["background"]),
         widget.GroupBox(
-            highlight_method = "line",
+            highlight_method = "text",
             background = everforest["background"],
             font="JetBrainsMono Nerd Font",
-            fontsize = 18,
-            spacing = 10,
+            fontsize = 19,
+            spacing = 5,
             active = everforest["fg1"],
-            highlight_color = [everforest["selection"],everforest["selection"]],
-            this_current_screen_border = everforest["aqua"],
-            inactive = everforest["grey"]
+            highlight_color = [everforest["bg_3"],everforest["bg_3"]],
+            this_current_screen_border = everforest["green"],
+            inactive = everforest["grey"],
+            **decoration_group_stats
         ),
         widget.TextBox(text=" ",
         fontsize=20,
@@ -313,7 +316,7 @@ def get_widgets(primary = False):
         ),
         # Window Mane Layout
         widget.WindowName(
-            fontsize = 13,
+            fontsize = 14,
             font = "JetBrainsMono Nerd Font Bold",
             foreground = everforest["grey"],
             background = everforest["background"],
@@ -323,31 +326,32 @@ def get_widgets(primary = False):
         # PC stats
         widget.WidgetBox(text_open="  ", text_closed=" Stats   ", 
         background=everforest["background"], 
-        foreground=everforest["fg1"],
+        foreground=everforest["green"],
         widgets=[
             widget.Memory(format='  {MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}', 
                 background=everforest["background"],
-                foreground=everforest["fg1"],
+                foreground=everforest["grey"],
                 **decoration_group_stats),
             widget.TextBox(text="|", 
                 background=everforest["background"],
-                foreground=everforest["fg1"],
+                foreground=everforest["grey"],
                 **decoration_group_stats),
             widget.ThermalSensor(format=" {temp:.1f}{unit}",
                 background=everforest["background"],
-                foreground=everforest["fg1"],
+                foreground=everforest["grey"],
                 **decoration_group_stats),
             widget.CPU(format='{freq_current}GHz {load_percent}%', 
                 background=everforest["background"],
-                foreground=everforest["fg1"],
+                foreground=everforest["grey"],
                 **decoration_group_stats),
             ],
             **decoration_group_stats
         ),
         # Clock
         widget.Spacer(length=10, background=everforest["background"]),
-        MyClock(format = "%I:%M %p",
-        foreground=everforest["fg1"],
+        MyClock(format = "%I:%M",
+        foreground=everforest["aqua"],
+        fontsize = 14,
         background = everforest["background"],
         **decoration_group_clock
         ),
