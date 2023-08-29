@@ -259,7 +259,7 @@ def get_widgets(primary = False):
                 filename = "~/.config/qtile/icons/icon_forest.png",
                 scale = "True",
                 margin = 3,
-                background=everforest["bg_"],
+                background=everforest["bg_2"],
                 mouse_callbacks = {'Button1': lazy.spawn("rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-11.rasi")},
                 **decoration_group_backlight
                 ),

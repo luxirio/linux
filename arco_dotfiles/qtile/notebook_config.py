@@ -20,17 +20,19 @@ terminal = guess_terminal()
 
 # Color theming
 everforest = {
-    "background":   "#272e33",
+    "background":   "#161819",
     "bg_blue":      "#3A515D",
-    "bg_dim":       "#232A2E",
-    "bg_0":         "#2D353B",
-    "bg_1":         "#343F44",
-    "bg_2":         "#3D484D",
-    "bg_3":         "#475258",
-    "bg_4":         "#4F585E",
+    "bg_dim":       "#1A1C1D",
+    "bg_0":         "#1E2022",
+    "bg_1":         "#222426",
+    "bg_2":         "#26282B",
+    "bg_3":         "#272A2E",
+    "bg_4":         "#2A2C2F",
     "error":        "#514045",
     "selection":    "#425047",
-    "fg1":          "#dcd1bb",
+    "light_selection":"#829181",
+    "fg1":          "#D6CBB5",
+    "fg2":          "#BDB4A3",
     "orange":       "#E69875",
     "red":          "#E67E80",
     "yellow":       "#DBBC7F",
@@ -40,7 +42,7 @@ everforest = {
     "aqua2":        "#506e57",
     "blue":         "#7FBBB3",
     "purple":       "#D699B6",
-    "grey":         "#7A8478",
+    "grey":         "#595750",
     "greyblock":    "#565e65",
     "greyblock_dark":"#444B50",
     "greybg":       "#3a4248",
@@ -182,19 +184,19 @@ for g, k in zip(groups, group_hotkeys):
 # This is the layouts available
 layouts = [
     layout.MonadTall(margin = 10, 
-        border_width = 3,
-        border_focus = everforest["selection"],
-        border_normal = everforest["background"]
+        border_width = 2,
+        border_focus = everforest["aqua1"],
+        border_normal = everforest["bg_3"]
     ),
     layout.Columns(
         margin = 5, 
-        border_focus = everforest["selection"],
-        border_normal = everforest["background"],
-        border_width=3),
+        border_focus = everforest["aqua1"],
+        border_normal = everforest["bg_3"],
+        border_width=2),
     layout.Max(),
     layout.Floating(
         border_focus = everforest["selection"],
-        border_normal = everforest["background"],),
+        border_normal = everforest["bg_3"],),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -281,14 +283,14 @@ def get_widgets(primary = False):
             text ="",
             padding =-1,
             fontsize =28,
-            foreground=everforest["greybg"],
+            foreground=everforest["bg_2"],
             background=everforest["background"],
         ),
         widget.Image(
                 filename = "~/.config/qtile/icons/icon_forest.png",
                 scale = "True",
                 margin = 3,
-                background=everforest["greybg"],
+                background=everforest["bg_2"],
                 mouse_callbacks = {'Button1': lazy.spawn("rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-11.rasi")},
                 **decoration_group_backlight
                 ),
@@ -296,7 +298,7 @@ def get_widgets(primary = False):
             text ="",
             padding =-1,
             fontsize =28,
-            foreground=everforest["greybg"],
+            foreground=everforest["bg_2"],
             background=everforest["background"],
         ),
 
@@ -316,7 +318,7 @@ def get_widgets(primary = False):
             fontsize = 18,
             spacing = 10,
             active = everforest["fg1"],
-            highlight_color = [everforest["selection"],everforest["selection"]],
+            highlight_color = [everforest["black"],everforest["black"]],
             this_current_screen_border = everforest["aqua"],
             inactive = everforest["grey"]
         ),
@@ -354,23 +356,23 @@ def get_widgets(primary = False):
         # PC stats
         widget.WidgetBox(text_open="  ", text_closed=" Stats   ", 
         background=everforest["background"], 
-        foreground=everforest["fg1"],
+        foreground=everforest["green"],
         widgets=[
-            widget.Memory(format='  {MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}', 
+            widget.Memory(format='  {MemUsed: .0f}{mm}B / {MemTotal: .0f}{mm}B', 
                 background=everforest["background"],
-                foreground=everforest["fg1"],
+                foreground=everforest["fg2"],
                 **decoration_group_stats),
             widget.TextBox(text="|", 
                 background=everforest["background"],
-                foreground=everforest["fg1"],
+                foreground=everforest["fg2"],
                 **decoration_group_stats),
             widget.ThermalSensor(format=" {temp:.1f}{unit}",
                 background=everforest["background"],
-                foreground=everforest["fg1"],
+                foreground=everforest["fg2"],
                 **decoration_group_stats),
             widget.CPU(format='{freq_current}GHz {load_percent}%', 
                 background=everforest["background"],
-                foreground=everforest["fg1"],
+                foreground=everforest["fg2"],
                 **decoration_group_stats),
             ],
             **decoration_group_stats
@@ -408,7 +410,7 @@ def get_widgets(primary = False):
             backlight_name = "intel_backlight",
             brightness_file = "actual_brightness",
             change_command  = "brightnessctl s {0}%",
-            foreground = everforest["fg1"],
+            foreground = everforest["yellow"],
             background = everforest["background"],
             step = 5,
             **decoration_group_backlight
@@ -416,7 +418,7 @@ def get_widgets(primary = False):
         # Clock
         widget.Spacer(length=10, background=everforest["background"]),
         MyClock(format = "%I:%M %p",
-        foreground=everforest["fg1"],
+        foreground=everforest["aqua"],
         background = everforest["background"],
         **decoration_group_clock
         ),
@@ -436,7 +438,7 @@ screens = [
     Screen(
         top=bar.Bar(
             get_widgets(primary = True),
-            35, opacity = 1,
+            36, opacity = 1,
             #border_width=[0, 0, 2, 0],  # Draw top and bottom borders
             #border_color=["ff00ff", "000000", everforest["greybg"], "000000"]  # Borders are magenta
         ),
@@ -444,7 +446,7 @@ screens = [
     Screen(
         top=bar.Bar(
             get_widgets(primary = False),
-            30, opacity = 1,
+            36, opacity = 1,
             #border_width=[0, 0, 2, 0],  # Draw top and bottom borders
             #border_color=["ff00ff", "000000", everforest["greybg"], "000000"]  # Borders are magenta
         ),
@@ -474,9 +476,9 @@ floating_layout = layout.Floating(
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
     ],
-    border_focus = everforest["selection"],
+    border_focus = everforest["aqua1"],
     border_normal = everforest["background"],
-    border_width = 2,
+    border_width = 1,
     
 )
 auto_fullscreen = True

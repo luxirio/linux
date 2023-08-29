@@ -132,7 +132,7 @@ schemes:
   Everforest: &Everforest
     # Default colors
     primary:
-      background: '#1d2021'
+      background: '#161819'
       foreground: '#D3C6AA'
 
     # Normal colors
