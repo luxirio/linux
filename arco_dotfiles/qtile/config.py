@@ -113,15 +113,27 @@ keys = [
 ]
 
 # The window groups and names
+# Groups before
+# groups = [
+#     Group("", layout="max"),
+#     Group("", layout="max"),
+#     Group("", layout="columns"),
+#     Group("", layout="columns"),
+#     Group("ﳒ"),
+#     Group(""),
+#     Group(""),
+#     Group("", layout="floating")
+# ]
+
 groups = [
-    Group("", layout="max"),
-    Group("", layout="max"),
-    Group("", layout="columns"),
-    Group(""),
-    Group("ﳒ"),
-    Group(""),
-    Group(""),
-    Group("", layout="floating")
+    Group(name="1", label="󰟒",layout="max"),
+    Group(name="2", label="󰈹", layout="max"),
+    Group(name="3", label="", layout="columns"),
+    Group(name="4", label="󰌠", layout="columns"),
+    Group(name="5", label="󰷸"),
+    Group(name="6", label="󱤅"),
+    Group(name="7", label="󰎆"),
+    Group(name="8", label="󰘻", layout="floating", persist=False)
 ]
 group_hotkeys = "12345678"
 for g, k in zip(groups, group_hotkeys):
@@ -152,20 +164,25 @@ for g, k in zip(groups, group_hotkeys):
 # This is the layouts available
 layouts = [
     layout.MonadTall(margin = 10, 
-        border_width = 3,
-        border_focus = everforest["light_selection"],
+        border_width = 2,
+        border_focus = everforest["aqua"],
         border_normal = everforest["background"]
     ),
     layout.Columns(
         margin = 10, 
-        border_focus = everforest["light_selection"],
+        border_focus = everforest["aqua"],
         border_normal = everforest["background"],
         border_on_single = everforest["selection"],
-        border_width=3),
+        border_width=2),
     layout.Max(),
     layout.Floating(
         border_focus = everforest["light_selection"],
         border_normal = everforest["background"],),
+    layout.MonadThreeCol(
+        border_focus = everforest["aqua"],
+        border_normal = everforest['background'],
+        margin = 10
+    )
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -216,7 +233,7 @@ class MyClock(widget.Clock):
 # Stats decoration
 decoration_group_stats = {
     "decorations": [
-        RectDecoration(colour=everforest["bg_1"], radius=10, filled=True, padding_y=3, group=True)
+        RectDecoration(colour=everforest["bg_1"], radius=10, filled=True, group=True)
     ],
     "padding": 10,}
 
@@ -252,14 +269,14 @@ def get_widgets(primary = False):
             text ="",
             padding =-1,
             fontsize =26,
-            foreground=everforest["bg_2"],
+            foreground=everforest["background"],
             background=everforest["background"],
         ),
         widget.Image(
                 filename = "~/.config/qtile/icons/icon_forest.png",
                 scale = "True",
-                margin = 3,
-                background=everforest["bg_"],
+                margin = 5,
+                background=everforest["background"],
                 mouse_callbacks = {'Button1': lazy.spawn("rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-11.rasi")},
                 **decoration_group_backlight
                 ),
@@ -267,7 +284,7 @@ def get_widgets(primary = False):
             text ="",
             padding =-1,
             fontsize =26,
-            foreground=everforest["bg_2"],
+            foreground=everforest["background"],
             background=everforest["background"],
         ),
 
@@ -282,6 +299,8 @@ def get_widgets(primary = False):
         background=everforest["background"]),
         widget.GroupBox(
             highlight_method = "text",
+            rounded=True,
+            margin_x=10,
             background = everforest["background"],
             font="JetBrainsMono Nerd Font",
             fontsize = 19,
@@ -289,6 +308,7 @@ def get_widgets(primary = False):
             active = everforest["fg1"],
             highlight_color = [everforest["bg_3"],everforest["bg_3"]],
             this_current_screen_border = everforest["green"],
+            hide_unused=False,
             inactive = everforest["grey"],
             **decoration_group_stats
         ),
@@ -305,7 +325,7 @@ def get_widgets(primary = False):
         widget.CurrentLayoutIcon(
             background=everforest["background"],
             max_chars = 3,
-            scale = 0.57,
+            scale = 0.50,
             custom_icon_paths = [".config/qtile/icons/layout-icons"]
         ),
 
@@ -318,7 +338,7 @@ def get_widgets(primary = False):
         widget.WindowName(
             fontsize = 14,
             font = "JetBrainsMono Nerd Font Bold",
-            foreground = everforest["grey"],
+            foreground = everforest["background"],
             background = everforest["background"],
         ),
         # RIGHT WIDGETS
@@ -328,21 +348,21 @@ def get_widgets(primary = False):
         background=everforest["background"], 
         foreground=everforest["green"],
         widgets=[
-            widget.Memory(format='  {MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}', 
+            widget.Memory(format='  {MemUsed: .0f}{mm}B /{MemTotal: .0f}{mm}B', 
                 background=everforest["background"],
-                foreground=everforest["grey"],
+                foreground=everforest["aqua1"],
                 **decoration_group_stats),
             widget.TextBox(text="|", 
                 background=everforest["background"],
                 foreground=everforest["grey"],
                 **decoration_group_stats),
-            widget.ThermalSensor(format=" {temp:.1f}{unit}",
+            widget.ThermalSensor(format="󱃃 {temp:.1f}{unit}",
                 background=everforest["background"],
-                foreground=everforest["grey"],
+                foreground=everforest["orange"],
                 **decoration_group_stats),
-            widget.CPU(format='{freq_current}GHz {load_percent}%', 
+            widget.CPU(format=' {freq_current}GHz ({load_percent}%)', 
                 background=everforest["background"],
-                foreground=everforest["grey"],
+                foreground=everforest["red"],
                 **decoration_group_stats),
             ],
             **decoration_group_stats
@@ -362,7 +382,17 @@ def get_widgets(primary = False):
 
 # Returning systray only if primary window
     if primary:
-        widgets.insert(11, widget.Systray(background=everforest["background"])),
+        widgets.insert(
+            11, 
+            widget.WidgetBox(
+                background=everforest['background'],
+                fontsize=16,
+                foreground=everforest['grey'],
+                text_closed=' ',
+                text_open="󰞔 ",
+                widgets=[widget.Systray(background=everforest["background"])]
+                )
+            ),
         widgets.insert(12, widget.Spacer(length=10, background=everforest["background"]))
     return widgets
 
@@ -371,7 +401,7 @@ screens = [
     Screen(
         top=bar.Bar(
             get_widgets(primary = True),
-            36, opacity = 1,
+            38, opacity = 1,
             #border_width=[0, 0, 2, 0],  # Draw top and bottom borders
             #border_color=["ff00ff", "000000", everforest["greybg"], "000000"]  # Borders are magenta
         ),
@@ -409,7 +439,7 @@ floating_layout = layout.Floating(
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
     ],
-    border_focus = everforest["selection"],
+    border_focus = everforest["light_selection"],
     
 )
 auto_fullscreen = True
