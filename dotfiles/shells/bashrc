@@ -1,0 +1,27 @@
+### EXPORT ###
+export EDITOR='nvim'
+export VISUAL='nvim'
+export HISTCONTROL=ignoreboth:erasedups
+export PAGER='most'
+export PF_INFO="ascii os host kernel uptime pkgs memory palette"
+export PF_ASCII="arch"
+
+PS1='[\[\033[0;32m\]\W\[\033[0m\]] \[\033[0;32m\]>\[\033[0;34m\]> \[\033[0m\]'
+
+#ignore upper and lowercase when TAB completion
+bind "set completion-ignore-case on"
+
+### ALIASES ###
+#list
+alias ls='lsd --color=auto'
+alias vim='nvim'
+
+## Colorize the grep command output for ease of use (good for log files)##
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+#which graphical card is working
+alias whichvga="/usr/local/bin/arcolinux-which-vga"
+
+

@@ -1,0 +1,35 @@
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+# Theme and plugins
+ZSH_THEME="robbyrussell"
+plugins=(git
+zsh-autosuggestions)
+
+#Colors of directories and stuff
+LS_COLORS=$LS_COLORS:'di=0;32:'  #to green
+export LS_COLORS
+
+# Sourcing the zshell
+source $ZSH/oh-my-zsh.sh
+
+# ALIASES
+# Usual commands
+alias ls='lsd --color=auto'
+## Colorize the grep command output for ease of use (good for log files)##
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+# LibreOffice
+alias writer='env GTK_THEME=Adwaita:light libreoffice --writer &'
+alias excel='env GTK_THEME=Adwaita:light libreoffice --calc &'
+
+alias qtileconfig="vim ~/.config/qtile/config.py"
+alias autostart='vim ~/.config/qtile/autostart.sh'
+# Battery for notebook config
+alias ecomode='sudo tlp bat'
+alias acmode='sudo tlp ac'
+
+# Arcolinux
+alias whichvga="/usr/local/bin/arcolinux-which-vga"
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#A7C080,bg=#2D353B,bold,underline"
