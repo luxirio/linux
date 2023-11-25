@@ -1,35 +1,53 @@
-# QTile 
-## The following dependencies are required to run my config:
+# Dotfiles
+This repo is my up-to-date dotfiles of the theme I'm developing called
+**Darkforest**. 
 
-The idea of the `config.py` is to be ready to use as soon as you can install the dependencies depicted below.
+Hope you like it! I like to daily drive with mainly Arch-based
+distros ([ArcoLinux](https://arcolinux.com/) at the moment)
 
-A snapshot of the current final theme for my **PC** can be seen below:
-<img alt="Crrent PC Ricing" src="https://lh5.googleusercontent.com/j6ZGKPih3vK-M0ksDGiyztcgadOjZC6OvsWE7bXH5lIDrGfgMU1cPhOZ2AAK2sphpbo=w2400">
-</picture>
+## Darkforest
+![Alt text](prints/image-3.png)
 
-A snapshot of the current final theme for my **laptop** can be seen below:
 
-<img alt="Current Laptop Ricing" src="https://lh3.googleusercontent.com/GKi5qhh1B1EHcmNyOECIld6OKHCaM3rokCU5guaAEv9zJiuXqQLhPhCNYlwq70NjhCY=w2400">
-</picture>
+![Alt text](prints/image-2.png)
 
-**IMPORTANT**: Don't forget to do `chmod +x autostart.sh` on autostart.sh file in qtile folder to make it executable.
+## Specifications
+* **OS**: ArcoLinux
+* **DE/WM**: qtile
+* **Terminal**: alacritty
+* **Shell**: zsh
+* **Text editor(s)**: Nvim/VSCode/RStudio
+* **Font**: JetBrains Mono Nerd Font, but I also use Hack NF
 
-I use oh-my-zshell (see my `zshrc` file for configs) with alacritty for terminal emulator;
-
-If you do not have any Nerd Font, installing JetBrainsMono will suffice.
-
-* JetBrainsMono Nerd Font; All the theme is based on JetBrainsMono, that's definetly one of the fonts I like the most and you should [download here](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/JetBrainsMono.zip). Just do `cd ~/Downloads` and `unzip JetBrainsMono.zip -d JetBrainsMono` on your terminal. Finally move it onto `/usr/share/fonts`
-*  [Papirus-icons](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) or [Tela-circle](https://github.com/vinceliuice/Tela-circle-icon-theme)
-
-The following applets are required to run the `autostarth.sh` file (specially on laptops)
-* caffeine (just do `sudo apt install caffeine` on Debian-based) - screen saver disabling software
-* nm-applet (`sudo apt install budgie-network-manager-applet`) - applet for network connection
-* flameshot (`sudo apt install flameshot`) - for taking screenshots
-* pavucontrol (`sudo apt install pavucontrol`) - volume control
-* volumeicon
-* numlockx (`sudo apt install numlockx` )
-* picom ([jonaburg's fork](https://github.com/jonaburg/picom)) - the compositor of my choice
-* nitrogen (`sudo apt install nitrogen`) - image and background
-* feh (`sudo apt install feh`) - image and background
-
-Note: This page is still a work in progress.
+## Theme synthax
+In order to be consistent with the color scheme, it is crucial to have a color scheme/synthax. The colors that I use are listed below and are based on both the [Everforest](https://github.com/sainnhe/everforest) and [Gruvbox](https://github.com/sainnhe/gruvbox-material) synthax.
+```
+- background:   '#161819'
+- bg_blue:      '#3A515D'
+- bg_dim:       '#181B1C'
+- bg_0:         '#1A1C1D'
+- bg_1:         '#1B1D1E'
+- bg_2:         '#1C1F20'
+- bg_3:         '#1D2021'
+- bg_4:         '#292B2C'
+- error:        '#514045'
+- selection:    '#425047'
+- light_selection: '#829181'
+- fg1:          '#dcd1bb'
+- orange:       '#E69875'
+- red:          '#E67E80'
+- yellow:       '#DBBC7F'
+- green:        '#A7C080'
+- aqua:         '#83C092'
+- aqua1:        '#648a6d'
+- aqua2:        '#506e57'
+- blue:         '#7FBBB3'
+- purple:       '#D699B6'
+- grey:         '#595750'
+- greyblock:    '#565e65'
+- greyblock_dark: '#444B50'
+- greybg:       '#3a4248'
+- black:        '#1d2124'
+```
+Preview of the pallete:
+<img src="prints/image-4.png" width="600">

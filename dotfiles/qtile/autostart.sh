@@ -7,8 +7,4 @@ function run {
 }
 # Run wallpaper
 run feh --bg-fill --randomize ~/Pictures/.wallpapers/*
-# Run picom
 run picom -b --config ~/.config/qtile/picom.conf
-# Run applets make sure to have them all installed
-#run caffeine
-run nm-applet

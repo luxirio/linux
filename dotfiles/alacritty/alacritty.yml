@@ -1,141 +1,56 @@
-# Configuration for Alacritty, the GPU enhanced terminal emulator.
+# My personal configuration for alacritty 
 window:
   padding:
     x: 15
     y: 15
   dynamic_padding: false
 
-  # Background opacity
-  opacity: 0.97
+  opacity: 1
   title: Alacritty
   class:
-    # Application instance name
+    # Application instance name and general application class, mainly for compostor
     instance: Alacritty
-    # General application class
     general: Alacritty
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
-  # Specifying '0' will disable scrolling.
-  history: 5000
+  history: 400
 
-
-# Font configuration
+# Font config
 font:
-  # Normal (roman) font face
   normal:
-    # family: Iosevka Nerd Font
-    family: Fura Mono Nerd Font
-    # family: Hack Nerd Font
-    # family: JetBrains Mono Nerd Font
-    # family: UbuntuMono Nerd Font
+    family: JetBrainsMono NF
     style: Medium
 
-  # Bold font face
   bold:
-    family: Fura Mono Nerd Font
-    # family: JetBrains Mono
-    # family: Monofur Nerd Font
+    family: Hack Nerd Font
     style: Bold
 
-  # Italic font face
   italic:
     family: Source Code Pro
-    # family: JetBrains Mono
-    # family: Mononoki Nerd Font
     style: Italic
 
   bold_italic:
     family: Source Code Pro
-    # family: JetBrains Mono Nerd Font
     style: Bold Italic
 
   # Point size
   size: 11
-  # Offset is the extra space around each character. `offset.y` can be thought of
-  # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
+  # Offset is the extra space around each character. 
   offset:
     x: 0
-    y: 3
+    y: 2
 
-  #glyph_offset:
-  #  x: 0
-  #  y: 0
-# If `true`, bold text is drawn using the bright color variants.
-draw_bold_text_with_bright_colors: true
+draw_bold_text_with_bright_colors: false
 
-#######################################
-##      START OF COLOR SCHEMES       ##
-#######################################
+###################
+## COLOR SCHEMES ##
 schemes:
-  ### Gruvbox dark ###
-  GruvboxDark: &GruvboxDark
-    # Default colors
-    primary:
-      # hard contrast: background = '0x1d2021'
-      background: '#282828'
-      # soft contrast: background = '0x32302f'
-      foreground: '#ebdbb2'
-
-    # Normal colors
-    normal:
-      black:   '#282828'
-      red:     '#cc241d'
-      green:   '#98971a'
-      yellow:  '#d79921'
-      blue:    '#458588'
-      magenta: '#b16286'
-      cyan:    '#689d6a'
-      white:   '#a89984'
-
-    # Bright colors
-    bright:
-      black:   '#928374'
-      red:     '#fb4934'
-      green:   '#b8bb26'
-      yellow:  '#fabd2f'
-      blue:    '#83a598'
-      magenta: '#d3869b'
-      cyan:    '#8ec07c'
-      white:   '#ebdbb2'
-
-  ### Nord ###
-  Nord: &Nord
-    # Default colors
-    primary:
-      background: '#2E3440'
-      foreground: '#D8DEE9'
-
-    # Normal colors
-    normal:
-      black:   '#3B4252'
-      red:     '#BF616A'
-      green:   '#A3BE8C'
-      yellow:  '#EBCB8B'
-      blue:    '#81A1C1'
-      magenta: '#B48EAD'
-      cyan:    '#88C0D0'
-      white:   '#E5E9F0'
-
-    # Bright colors
-    bright:
-      black:   '#4C566A'
-      red:     '#BF616A'
-      green:   '#A3BE8C'
-      yellow:  '#EBCB8B'
-      blue:    '#81A1C1'
-      magenta: '#B48EAD'
-      cyan:    '#8FBCBB'
-      white:   '#ECEFF4' 
-    
-  ### Everforest ###
-  Everforest: &Everforest
-    # Default colors
+  Darkforest: &Darkforest
     primary:
       background: '#161819'
       foreground: '#D3C6AA'
 
-    # Normal colors
     normal:
       black:   '#3B4252'
       red:     '#BF616A'
@@ -146,7 +61,6 @@ schemes:
       cyan:    '#88C0D0'
       white:   '#E5E9F0'
 
-    # Bright colors
     bright:
       black:   '#4C566A'
       red:     '#BF616A'
@@ -156,38 +70,16 @@ schemes:
       magenta: '#B48EAD'
       cyan:    '#8FBCBB'
       white:   '#ECEFF4' 
-######################################################################
-## SET THEME: Choose ONE color scheme from those in the above list. ##
-## ###################################################################
-# Available themes are:
-# *GruvboxDark
-# *Nord
-# *Everforest
-colors: *Everforest
+colors: *Darkforest
 
-#######################################
-##       END OF COLOR SCHEMES        ##
-#######################################
 cursor:
-  # Cursor style
-  #
   # Values for `style`:
   #   - ▇ Block
   #   - _ Underline
   #   - | Beam
   style: Beam
-  # If this is `true`, the cursor will be rendered as a hollow box when the
-  # window is not focused.
-  #unfocused_hollow: true
 
-# Live config reload (changes require restart)
-#live_config_reload: true
-# Bindings are always filled by default, but will be replaced when a new
-# binding with the same triggers is defined. To unset a default binding, it can
-# be mapped to the `ReceiveChar` action. Alternatively, you can use `None` for
-# a no-op if you do not wish to receive input characters for that binding.
 key_bindings:
-    # (Windows, Linux, and BSD only)
   - { key: V,         mods: Control|Shift, action: Paste                       }
   - { key: C,         mods: Control|Shift, action: Copy                        }
   - { key: Insert,    mods: Shift,         action: PasteSelection              }
@@ -204,4 +96,5 @@ key_bindings:
   - { key: PageDown,  mods: None,          action: ScrollPageDown, mode: ~Alt  }
   - { key: Home,      mods: Shift,         action: ScrollToTop,    mode: ~Alt  }
   - { key: End,       mods: Shift,         action: ScrollToBottom, mode: ~Alt  }
+
 
