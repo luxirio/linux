@@ -6,10 +6,9 @@ Hope you like it! I like to daily drive with mainly Arch-based
 distros ([ArcoLinux](https://arcolinux.com/) at the moment)
 
 ## Darkforest
-![Alt text](prints/image-3.png)
+<img src="prints/image-3.png" width="1200">
 
-
-![Alt text](prints/image-2.png)
+<img src="prints/image-2.png" width="1200">
 
 ## Specifications
 * **OS**: ArcoLinux
