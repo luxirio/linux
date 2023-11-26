@@ -6,9 +6,13 @@ Hope you like it! I like to daily drive with mainly Arch-based
 distros ([ArcoLinux](https://arcolinux.com/) at the moment)
 
 ## Darkforest
-<img src="dotfiles/prints/image-3.png" width="1200">
+<img src="dotfiles/prints/image-1.png" width="1400">
 
-<img src="dotfiles/prints/image-2.png" width="1200">
+<p>
+<!--- <img src="dotfiles/prints/image-3.png" width="1400"> --->
+<p>
+
+<img src="dotfiles/prints/image-2.png" width="1400">
 
 ## Specifications
 * **OS**: ArcoLinux
@@ -49,4 +53,5 @@ In order to be consistent with the color scheme, it is crucial to have a color s
 - black:        '#1d2124'
 ```
 Preview of the pallete:
+
 <img src="dotfiles/prints/image-4.png" width="600">
