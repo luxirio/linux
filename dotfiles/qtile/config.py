@@ -83,6 +83,7 @@ keys = [
         desc="Toggle between split and unsplit sides of stack",
     ),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "b", lazy.spawn("firefox"), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
@@ -164,22 +165,23 @@ for g, k in zip(groups, group_hotkeys):
 layouts = [
     layout.MonadTall(margin = 10,
         border_width = 2,
-        border_focus = everforest["aqua"],
+        border_focus = everforest["selection"],
         border_normal = everforest["background"]
     ),
     layout.Columns(
         margin = 10,
-        border_focus = everforest["aqua"],
+        border_focus = everforest["selection"],
         border_normal = everforest["background"],
         border_on_single = everforest["selection"],
-        border_width=2),
+        border_width= 2),
     layout.Max(),
     layout.Floating(
-        border_focus = everforest["light_selection"],
+        border_focus = everforest["selection"],
         border_normal = everforest["background"],),
     layout.MonadThreeCol(
-        border_focus = everforest["aqua"],
+        border_focus = everforest["grey"],
         border_normal = everforest['background'],
+        border_width=2,
         margin = 10
     )
     # Try more layouts by unleashing below layouts.
@@ -232,7 +234,7 @@ class MyClock(widget.Clock):
 # Stats decoration
 decoration_group_stats = {
     "decorations": [
-        RectDecoration(colour=everforest["bg_1"], radius=10, filled=True, group=True)
+        RectDecoration(colour=everforest["bg_1"], radius=10, filled=True, padding_y=3, group=True)
     ],
     "padding": 10,}
 
@@ -259,7 +261,7 @@ decoration_group_clock = {
 
 
 
-#Defining the widget function
+# Defining the widget function
 def get_widgets(primary = False):
     widgets = [
         # LEFT WIDGETS
@@ -274,7 +276,7 @@ def get_widgets(primary = False):
         widget.Image(
                 filename = "~/.config/qtile/icons/icon_forest.png",
                 scale = "True",
-                margin = 5,
+                margin = 6,
                 background=everforest["background"],
                 mouse_callbacks = {'Button1': lazy.spawn('rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-11.rasi')},
                 **decoration_group_backlight
@@ -385,7 +387,7 @@ def get_widgets(primary = False):
                 foreground=everforest['grey'],
                 text_closed=' ',
                 text_open=" ",
-                widgets=[widget.Systray(background=everforest["background"])]
+                widgets=[widget.Systray(background=everforest["background"], icons_size=60)]
                 )
             ),
         widgets.insert(12, widget.Spacer(length=10, background=everforest["background"]))
@@ -396,7 +398,7 @@ screens = [
     Screen(
         top=bar.Bar(
             get_widgets(primary = True),
-            38, opacity = 1,
+            35, opacity = 1,
             #border_width=[0, 0, 2, 0],  # Draw top and bottom borders
             #border_color=["ff00ff", "000000", everforest["greybg"], "000000"]  # Borders are magenta
         ),

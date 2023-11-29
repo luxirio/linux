@@ -15,10 +15,9 @@ call plug#begin()
   Plug 'nvim-lualine/lualine.nvim'
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'lukas-reineke/indent-blankline.nvim'
-  Plug 'https://github.com/folke/lazy.nvim'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.4' }
-  Plug 'https://github.com/nvim-tree/nvim-tree.lua'
+  Plug 'https://github.com/tpope/vim-surround'
 call plug#end()
 
 " Set colorscheme
@@ -27,7 +26,7 @@ colorscheme everforest
 highlight Normal ctermbg=none guibg=none 
 hi NormalNC ctermbg=none guibg=none
 hi Visual term=reverse cterm=none guibg=#DBBC7F guifg=Black
-hi CursorLine cterm=NONE ctermbg=Grey ctermfg=NONE guibg=#1c1f20 guifg=NONE
+hi CursorLine cterm=NONE ctermbg=Grey ctermfg=NONE guibg=#1D2021 guifg=NONE
 hi NvimTreeEndOfBuffer guibg=none
 hi NvimTreeNormal guibg=none
 " Enable features on VimEnter
@@ -36,6 +35,7 @@ augroup vim_enter_group
   autocmd VimEnter * TSEnable highlight | HighlightColorsOn
   autocmd BufWinLeave * if bufloaded(expand('%')) | mkview | endif
   autocmd BufWinEnter * silent! loadview
+  autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 augroup END
 
 " Set up rainbow delimiters
@@ -108,5 +108,4 @@ lua << EOF
   require("autoclose").setup()
   require("ibl").setup()
   require("telescope").setup()
-  require("nvim-tree").setup()
 EOF
