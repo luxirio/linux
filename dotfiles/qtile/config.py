@@ -50,7 +50,7 @@ everforest = {
 # (I just basically change the super + w to super + q to kill the window)
 # And I'm more used to
 keys = [
-    # Switch between windows
+   # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
@@ -164,31 +164,34 @@ for g, k in zip(groups, group_hotkeys):
 # This is the layouts available
 layouts = [
     layout.MonadTall(margin = 10,
-        border_width = 2,
-        border_focus = everforest["selection"],
-        border_normal = everforest["background"]
+        border_width = 4,
+        border_focus = everforest["grey"],
+        border_normal = everforest["bg_3"],
+            ratio = 0.6
     ),
     layout.Columns(
         margin = 10,
-        border_focus = everforest["selection"],
-        border_normal = everforest["background"],
+        border_focus = everforest["grey"],
+        border_normal = everforest["bg_3"],
         border_on_single = everforest["selection"],
-        border_width= 2),
+        border_width= 4),
     layout.Max(),
     layout.Floating(
-        border_focus = everforest["selection"],
-        border_normal = everforest["background"],),
+        border_width=4,
+        border_normal = everforest["bg_3"],
+        border_focus = everforest["grey"],
+        border_on_single = everforest["selection"],
+        ),
     layout.MonadThreeCol(
         border_focus = everforest["grey"],
-        border_normal = everforest['background'],
-        border_width=2,
-        margin = 10
+        border_normal = everforest['bg_3'],
+        border_width=4,
+        margin = 5
     )
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadTall(),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
@@ -234,28 +237,28 @@ class MyClock(widget.Clock):
 # Stats decoration
 decoration_group_stats = {
     "decorations": [
-        RectDecoration(colour=everforest["bg_1"], radius=10, filled=True, padding_y=3, group=True)
+        RectDecoration(colour=everforest["bg_1"], radius=10, filled=True, padding_y=4, group=True)
     ],
     "padding": 10,}
 
 # Battery decoration
 decoration_group_battery = {
     "decorations": [
-        RectDecoration(colour=everforest["bg_2"], radius=10, filled=True, padding_y=3, group=True)
+        RectDecoration(colour=everforest["bg_2"], radius=10, filled=True, padding_y=5, group=True)
     ],
-    "padding": 5 }
+    "padding": 4 }
 
 # Backlight decoration
 decoration_group_backlight = {
     "decorations": [
-        RectDecoration(colour=everforest["bg_3"], radius=10, filled=True, padding_y=3, group=True)
+        RectDecoration(colour=everforest["bg_3"], radius=10, filled=True, padding_y=4, group=True)
     ],
     "padding": 10,}
 
 # Clock decoration
 decoration_group_clock = {
     "decorations": [
-        RectDecoration(colour=everforest["bg_4"], radius=10, filled=True, padding_y=3, group=True)
+        RectDecoration(colour=everforest["bg_4"], radius=10, filled=True, padding_y=4, group=True)
     ],
     "padding": 10,}
 
@@ -345,7 +348,7 @@ def get_widgets(primary = False):
         # RIGHT WIDGETS
         #Systray HERE
         # PC stats
-        widget.WidgetBox(text_open="", text_closed="Stats ", 
+        widget.WidgetBox(text_open="", text_closed="Stats 󰌪", 
         background=everforest["background"], 
         foreground=everforest["green"],
         widgets=[
@@ -357,7 +360,7 @@ def get_widgets(primary = False):
                 background=everforest["background"],
                 foreground=everforest["orange"],
                 **decoration_group_stats),
-            widget.CPU(format=' {load_percent}%', 
+            widget.CPU(format='󰇅 {load_percent}%', 
                 background=everforest["background"],
                 foreground=everforest["red"],
                 **decoration_group_stats),
@@ -373,8 +376,6 @@ def get_widgets(primary = False):
         **decoration_group_clock
         ),
         widget.Spacer(length=5, background=everforest["background"]),
-
-
     ]
 
 # Returning systray only if primary window
@@ -436,7 +437,9 @@ floating_layout = layout.Floating(
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
     ],
-    border_focus = everforest["light_selection"],
+        border_focus = everforest["grey"],
+        border_width =3,
+        border_normal = everforest["bg_3"]
     
 )
 auto_fullscreen = True

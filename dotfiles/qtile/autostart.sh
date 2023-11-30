@@ -8,3 +8,6 @@ function run {
 # Run wallpaper
 run feh --bg-fill --randomize ~/Pictures/.wallpapers/*
 run picom -b --config ~/.config/qtile/picom.conf
+run nm-applet
+run volumeicon
+run xmodmap ~/.Xmodmap
