@@ -23,4 +23,8 @@ return require('packer').startup(function(use)
 	use('nvim-treesitter/nvim-treesitter', {run =':TSUpdate'})
 	use('brenoprata10/nvim-highlight-colors')
 	use('nvim-treesitter/playground')
+	use('junegunn/fzf.vim')
+	use {'nvim-tree/nvim-tree.lua',
+	requires = {'nvim-tree/nvim-web-devicons', -- optional
+	}}
 end)

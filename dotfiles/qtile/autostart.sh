@@ -9,5 +9,6 @@ function run {
 run feh --bg-fill --randomize ~/Pictures/.wallpapers/*
 run picom -b --config ~/.config/qtile/picom.conf
 run nm-applet
-run volumeicon
+run pasystray
 run xmodmap ~/.Xmodmap
+run xset r rate 400 28
