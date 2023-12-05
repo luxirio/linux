@@ -1,9 +1,9 @@
 ## This is my QTILE Config
 #Importing libraries
-from libqtile import bar, layout, widget, hook
+from libqtile import bar, layout, widget, hook, qtile
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
-from libqtile.utils import guess_terminal
+from libqtile.utils import guess_terminal, send_notification
 from libqtile.widget.backlight import Backlight
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration, RectDecoration
@@ -20,11 +20,11 @@ terminal = guess_terminal()
 everforest = {
         "background":   "#161819",
         "bg_blue":      "#3A515D",
-        "bg_dim":       "#181B1C",
-        "bg_0":         "#1A1C1D",
-        "bg_1":         "#1B1D1E",
-        "bg_2":         "#1C1F20",
-        "bg_3":         "#1D2021",
+        "bg_dim":       "#191B1C",
+        "bg_0":         "#1C1E1F",
+        "bg_1":         "#202223",
+        "bg_2":         "#232526",
+        "bg_3":         "#262829",
         "bg_4":         "#292B2C",
         "error":        "#514045",
         "selection":    "#425047",
@@ -112,63 +112,76 @@ keys = [
     Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -D pulse sset Master 5%-"), desc="Decreases volume"),
 
 ]
-
-# The window groups and names
-# Groups before
 # groups = [
-        #     Group("", layout="max"),
-        #     Group("", layout="max"),
-        #     Group("", layout="columns"),
-        #     Group("", layout="columns"),
-        #     Group("ﳒ"),
-        #     Group(""),
-        #     Group(""),
-        #     Group("", layout="floating")
-        # ]
+#         Group(name="1", label="󰟒",layout="max"),
+#         Group(name="2", label="󰈹", layout="max"),
+#         Group(name="3", label="", layout="columns"),
+#         Group(name="4", label="󰌠", layout="columns"),
+#         Group(name="5", label="󰷸"),
+#         Group(name="6", label="󱤅"),
+#         Group(name="7", label="󰎆"),
+#         Group(name="8", label="󰘻", layout="floating", persist=True)
+#         ]
 
+# for g, k in zip(groups, group_hotkeys):
+#     keys.extend(
+#             [
+#                 Key(
+#                     [mod],
+#                     k,
+#                     lazy.group[g.name].toscreen(),
+#                     desc="Switch to group {}".format(g.name),
+#                     ),
+#                 # mod1 + shift + letter of group = switch to & move focused window to group
+#                 Key(
+#                     [mod, "shift"],
+#                     k,
+#                     lazy.window.togroup(g.name, switch_group=True),
+#                     desc="Switch to & move focused window to group {}".format(g.name),
+#                     ),
+#                 # Or, use below if you prefer not to switch to that group.
+#                 # # mod1 + shift + letter of group = move focused window to group
+#                 # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
+#                       #     desc="move focused window to group {}".format(i.name)),
+#                 ]
+#             )
+# mama
 groups = [
-        Group(name="1", label="󰟒",layout="max"),
-        Group(name="2", label="󰈹", layout="max"),
-        Group(name="3", label="", layout="columns"),
-        Group(name="4", label="󰌠", layout="columns"),
-        Group(name="5", label="󰷸"),
-        Group(name="6", label="󱤅"),
-        Group(name="7", label="󰎆"),
-        Group(name="8", label="󰘻", layout="floating", persist=True)
-        ]
-group_hotkeys = "12345678"
-for g, k in zip(groups, group_hotkeys):
+         Group(name="1",layout="max"),
+         Group(name="2", layout="max"),
+         Group(name="3", layout="columns"),
+         Group(name="4", layout="columns", persist=True),
+         Group(name="5", persist=True),
+         Group(name="6", persist=True),
+         Group(name="7", persist=True),
+         Group(name="8", layout="floating", persist=True)
+         ]
+for i in groups:
     keys.extend(
-            [
-                Key(
-                    [mod],
-                    k,
-                    lazy.group[g.name].toscreen(),
-                    desc="Switch to group {}".format(g.name),
-                    ),
-                # mod1 + shift + letter of group = switch to & move focused window to group
-                Key(
-                    [mod, "shift"],
-                    k,
-                    lazy.window.togroup(g.name, switch_group=True),
-                    desc="Switch to & move focused window to group {}".format(g.name),
-                    ),
-                # Or, use below if you prefer not to switch to that group.
-                # # mod1 + shift + letter of group = move focused window to group
-                # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-                      #     desc="move focused window to group {}".format(i.name)),
-                ]
-            )
-
-
+        [
+            # mod1 + group number = switch to group
+            Key(
+                [mod],
+                i.name,
+                lazy.group[i.name].toscreen(),
+                desc="Switch to group {}".format(i.name),
+            ),
+            # mod1 + shift + group number = switch to & move focused window to group
+            Key(
+                [mod, "shift"],
+                i.name,
+                lazy.window.togroup(i.name, switch_group=True),
+                desc="Switch to & move focused window to group {}".format(i.name),
+            ),
+            # Or, use below if you prefer not to switch to that group.
+            # # mod1 + shift + group number = move focused window to group
+            # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
+            #     desc="move focused window to group {}".format(i.name)),
+        ]
+    )
 # This is the layouts available
 layouts = [
-        layout.MonadTall(margin = 10,
-                         border_width = 3,
-                         border_focus = everforest["grey"],
-                         border_normal = everforest["bg_3"],
-                         ratio = 0.6
-                         ),
+        layout.Max(),
         layout.Columns(
             margin = 10,
             border_focus = everforest["grey"],
@@ -176,19 +189,25 @@ layouts = [
             border_on_single = everforest["selection"],
             border_width= 3
             ),
-        layout.Max(),
-        layout.Floating(
-            border_width=3,
-            border_normal = everforest["bg_3"],
+        layout.MonadTall(
+            margin = 10,
+            border_width = 3,
             border_focus = everforest["grey"],
-            border_on_single = everforest["selection"],
+            border_normal = everforest["bg_3"],
+            ratio = 0.6
             ),
         layout.MonadThreeCol(
             border_focus = everforest["grey"],
             border_normal = everforest['bg_3'],
             border_width=3,
             margin = 5
-            )
+            ),
+        layout.Floating(
+            border_width=3,
+            border_normal = everforest["bg_3"],
+            border_focus = everforest["grey"],
+            border_on_single = everforest["selection"],
+            ),
         # layout.Stack(num_stacks=2),
         # layout.Bsp(),
         # layout.Matrix(),
@@ -214,11 +233,10 @@ class MyClock(widget.Clock):
     defaults = [
             (
                 "long_format",
-                "  %d/%m/%y - %a, %I:%M",
+                "%d/%m/%y - %a, %I:%M",
                 "Format to show when mouse is over widget."
                 )
             ]
-
     def __init__(self, **config):
         widget.Clock.__init__(self, **config)
         self.add_defaults(MyClock.defaults)
@@ -236,29 +254,30 @@ class MyClock(widget.Clock):
 # Stats decoration
 decoration_group_stats = {
         "decorations": [
-            RectDecoration(colour=everforest["bg_1"], radius=10, filled=True, padding_y=4, group=True)
+            RectDecoration(colour=everforest["bg_0"], radius=10, filled=True, padding_y=4, group=True)
             ],
-        "padding": 6,
+        "padding": 3,
         "padding_y": -5,}
 
 # Battery decoration
 decoration_group_battery = {
         "decorations": [
-            RectDecoration(colour=everforest["bg_2"], radius=10, filled=True, padding_y=5, group=True)
+            RectDecoration(colour=everforest["bg_1"], radius=10, filled=True, padding_y=4,padding_x=3, group=True)
             ],
-        "padding": 4 }
+        "padding": 12,
+        "padding_y": -10}
 
 # Backlight decoration
 decoration_group_backlight = {
         "decorations": [
-            RectDecoration(colour=everforest["bg_3"], radius=10, filled=True, padding_y=4, group=True)
+            RectDecoration(colour=everforest["bg_2"], radius=10, filled=True, padding_y=4, group=True)
             ],
         "padding": 3,}
 
 # Clock decoration
 decoration_group_clock = {
         "decorations": [
-            RectDecoration(colour=everforest["bg_4"], radius=10, filled=True, padding_y=4, group=True)
+            RectDecoration(colour=everforest["bg_3"], radius=10, filled=True, padding_y=4, group=True)
             ],
         "padding": 10,}
 
@@ -277,9 +296,9 @@ def get_widgets(primary = False):
                 background=everforest["background"],
                 ),
             widget.Image(
-                filename = "~/.config/qtile/icons/icon_lobo.png",
+                filename = "~/.config/qtile/icons/icon_forest.png",
                 scale = "True",
-                margin = 5,
+                margin = 8,
                 background=everforest["background"],
                 mouse_callbacks = {'Button1': lazy.spawn('rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-11.rasi')},
                 **decoration_group_backlight,
@@ -299,6 +318,7 @@ def get_widgets(primary = False):
                 ),
             widget.TextBox(
                 text=" ",
+                font="gustavo_icons",
                 fontsize=20,
                 foreground=everforest["grey"],
                 background=everforest["background"]
@@ -308,11 +328,11 @@ def get_widgets(primary = False):
                 center_aligned=True,
                 rounded=True,
                 radius=10,
-                margin_x=5,
+                margin_x=2,
                 background = everforest["background"],
-                font="JetBrainsMono Nerd Font",
-                fontsize = 19,
-                spacing =9,
+                font="icomoon",
+                fontsize = 12,
+                spacing =1,
                 active = everforest["fg1"],
                 highlight_color = [everforest["bg_3"],everforest["bg_3"]],
                 this_current_screen_border = everforest["green"],
@@ -322,6 +342,7 @@ def get_widgets(primary = False):
                 ),
             widget.TextBox(
                     text=" ",
+                    font="icomoon",
                     fontsize=20,
                     foreground=everforest["grey"],
                     background=everforest["background"]
@@ -335,7 +356,9 @@ def get_widgets(primary = False):
                 background=everforest["background"],
                 max_chars = 3,
                 scale = 0.50,
-                custom_icon_paths = [".config/qtile/icons/layout-icons"]
+                custom_icon_paths = [".config/qtile/icons/layout-icons"],
+                
+
                 ),
 
         # Window name
@@ -354,15 +377,16 @@ def get_widgets(primary = False):
         #Systray HERE
         # PC stats
         widget.WidgetBox(
-                text_open="  ", text_closed=" Stats 󰌪 ", 
+                text_open=" 󰄨 ", text_closed=" 󰌪 ", 
                 background=everforest["background"], 
                 foreground=everforest["green"],
+                fontsize=16,
                 widgets=[
-                    widget.Memory(format='{MemPercent: .1f} %', 
+                    widget.Memory(format='{MemPercent: .1f}% ', 
                                   background=everforest["background"],
                                   foreground=everforest["aqua1"],
                                   **decoration_group_stats),
-                    widget.ThermalSensor(format="󱃃 {temp:.1f}{unit}",
+                    widget.ThermalSensor(format="󱃃 {temp:.1f}{unit} ",
                                          background=everforest["background"],
                                          foreground=everforest["orange"],
                                          **decoration_group_stats),
@@ -393,11 +417,11 @@ def get_widgets(primary = False):
                     fontsize=16,
                     foreground=everforest['grey'],
                     text_closed=' ',
-                    text_open=" ",
+                    text_open="  ",
                     widgets=[widget.Systray(background=everforest["background"], icons_size=15)]
                     )
                 ),
-        widgets.insert(12, widget.Spacer(length=10, background=everforest["background"]))
+        widgets.insert(12, widget.Spacer(length=5, background=everforest["background"]))
     return widgets
 
 # Calling the bar on different screens
@@ -405,7 +429,7 @@ screens = [
         Screen(
             top=bar.Bar(
                 get_widgets(primary = True),
-                35, opacity = 1,
+                37, opacity = 1,
                 ),
             ),
         Screen(
@@ -460,12 +484,26 @@ wl_input_rules = None
 # mailing lists, GitHub issues, and other WM documentation that suggest setting
 # this string if your java app doesn't work correctly. We may as well just lie
 # and say that we're a working one by default.
-#
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
+@hook.subscribe.setgroup
+def setgroup():
+    for group in qtile.groups:
+        if group is qtile.current_group:
+            group.label = "" # Currently focused groups
+        else:
+            if group.windows:
+                group.label = ""  # Unfocused group, with windows
+            else:
+                group.label = ""  # Unfocused, empty group
+# @hook.subscribe.setgroukkp
+# def setgroup():
+#     for i in range(0, 9):
+#         qtile.groups[i].label = "○"
+#     qtile.current_group.label = "P"
 
-# Starting the first apps
+#  Starting the first apps
 @hook.subscribe.startup_once
 def autostart():
     home = os.path.expanduser("~/.config/qtile/autostart.sh")
