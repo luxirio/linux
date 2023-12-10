@@ -1,0 +1,9 @@
+#!/bin/bash
+
+keyboard_layout=$(hyprctl devices | grep 'US, intl')
+
+if [ "$keyboard_layout" == "" ]; then
+	echo "POR"
+else
+	echo "US"
+fi

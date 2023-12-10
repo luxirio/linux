@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Run your command and capture the status
+status=$(amixer get Capture | awk '/\[.*\]$/ {print $NF; exit}')
+
+# Check the status and echo the corresponding value
+if [ "$status" == "[on]" ]; then
+  echo "1"
+elif [ "$status" == "[off]" ]; then
+  echo "0"
+else
+  echo "Unknown status"
+fi
+

@@ -1,0 +1,222 @@
+(defvar eww "/usr/bin/eww")
+(defvar wifi_rev false)
+(defvar vol_reveal false)
+(defpoll COL_WLAN :interval "1m" "~/.config/eww/scripts/wifi --COL")
+(defpoll WLAN_ICON :interval "1m" "~/.config/eww/scripts/wifi --ICON")
+(defpoll ESSID_WLAN :interval "1m" "~/.config/eww/scripts/wifi --ESSID")
+(defpoll CPU_USAGE :interval "10s" "~/.config/eww/scripts/cpu_usage")
+
+(defpoll time :interval "30s" `date +'{"day":"%a","hour":"%H","min":"%M"}'`)
+(defpoll volume :interval "1s" "scripts/getvol")
+(defpoll keyboard_layout :interval "2s" "scripts/keyboard_layout")
+(defpoll microphone :interval "1s" "scripts/get-microphone-status")
+(deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/get-workspaces")
+(deflisten current_workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
+
+;; Left widgets
+(defwidget leftwidgets []
+  (box :class "leftwidgets" :orientation "h" :halign "start" :space-evenly false
+       (workspaces)))
+
+(defwidget workspaces []
+  (eventbox :onscroll "bash ~/.config/eww/scripts/change-active-workspace {} ${current_workspace}" :class "workspaces-widget" :halign "start"
+    (box :space-evenly false :class "workspaces"
+      (label :text "${workspaces}${current_workspace}" :visible false)
+      (for workspace in workspaces
+        (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}"
+          (box :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
+            (label :text "${workspace.id == current_workspace ? "": ""}${(workspace.windows > 0) && (workspace.id != current_workspace) ? "" : ""}${(workspace.windows == 0) && (workspace.id != current_workspace) ? "":""}"))))))) 
+
+;; Right widgets
+(defwidget rightwidgets []
+  (box :class "rightwidgets" :orientation "h" :halign "end" :space-evenly false
+    (palette)
+    (screenshot)
+    (sep)
+    (basic_tray)
+    (sep)
+    (mem)
+    (cpu)
+    (sep)
+    (power)))
+    
+
+(defwidget palette []
+  (box :space-evenly "false"
+    (button 
+      :class "palette"
+      :timeout "20000"
+      :onclick "hyprpicker -a" 
+      :tooltip "Color picker"
+      :wrap "true"
+      "󰏫")))
+
+(defwidget screenshot []
+  (box :space-evenly "false"
+    (button 
+      :timeout "20000"
+      :class "screenshot"
+      :onclick "hyprshot --clipboard-only -m region" 
+      :tooltip "Take a screenshot"
+      :wrap "true"
+      "󰆞")))
+
+                            
+(defwidget wifi [] 
+  (eventbox :onhover "${eww} update wifi_rev=true"
+            :onhoverlost "${eww} update wifi_rev=false"
+    (box :vexpand "false" :hexpand "false" :space-evenly "false"
+     (button :class "module-wifi" 
+             :onclick "command" 
+             :wrap "false" 
+             :limit-width 12 
+             :tooltip "${ESSID_WLAN}"
+             :style "color: ${COL_WLAN};" WLAN_ICON))))
+     
+(defwidget _volume [strength mute high average low]
+  (box :class "volume-box"
+       :space-evenly false
+       :spacing 8
+    (label :text {strength < 10 ? mute:
+                  strength < 30 ? low:
+                  strength < 70 ? average:
+                  high})))
+
+(defwidget volume_anim []
+  (eventbox :onhover "${eww} update vol_reveal=true"
+            :onhoverlost "${eww} update vol_reveal=false"
+    (box :class "volume" :space-evenly "false" :spacing "3" :tooltip "${volume} %"
+         (button :onrightclick "pamixer -t" :class "volume_icon" 
+                 (_volume :strength volume
+                          :mute "󰸈"
+                          :high "󰕾"
+                          :average ""
+                          :low ""))
+         (revealer :transition "slideleft"
+                   :reveal vol_reveal
+                   :duration "1000ms"
+            (scale :class "volbar"
+                   :value volume
+                   :orientation "h"
+                   :tooltip "${volume}%"
+                   :max 101
+                   :min 0
+                   :onchange "amixer set Master {}%")))))
+
+(defwidget _microphone [status mute open]
+  (box :class "microphone_box"
+       :space-evenly false
+       :spacing 8
+    (label :text {status == 1 ? open: mute})))
+
+(defwidget microphone_anim []
+  (box :class "microphone" :space-evenly "false" :spacing 3
+       (button :onclick "amixer set Capture toggle" :class "microphone_icon ${microphone == 1 ? "open" : "mute" }"
+               (_microphone :status microphone
+                            :open "󰍬"
+                            :mute "󰍭"))))
+(defvar keyboard_reveal false)
+(defwidget keyboard []
+  (eventbox :onhover "${eww} update keyboard_reveal=true"
+            :onhoverlost "${eww} update keyboard_reveal=false"
+    (box :space-evenly "false"
+         :vexpand "false"
+         :class "keyboard-icon ${keyboard_layout == "POR" ? "pt" : "us"}"
+         "󰌌"
+      (revealer :transition "slideright"
+                :reveal keyboard_reveal
+                :duration "700ms"
+        (box :class "keyboard-lang"
+             (label :text "${keyboard_layout == "POR" ? "pt" : "us"}"))))))
+
+(defwidget basic_tray []
+  (box :class "basic_tray"
+       :space-evenly false
+    (wifi)
+    (volume_anim)
+    (microphone_anim)
+    (keyboard)))
+       
+;;  Metrics
+(defwidget mem []
+    (box :class "mem_module" :vexpand "false" :hexpand "false" 
+      (circular-progress :value {EWW_RAM.used_mem_perc}
+          :class "membar"
+          :thickness 4
+          :clockwise true
+        (button
+          :class "iconmem"
+          :limit-width 2
+          :tooltip "using ${round(EWW_RAM.used_mem_perc, 1)}% ram"
+          :onclick "command"
+          :show_truncated false
+          :wrap false
+          ""))))
+     
+(defwidget cpu []
+  (box :class "cpu_module"
+       (circular-progress :value {CPU_USAGE}
+                          :class "cpubar"
+                          :thickness 4
+                          :clockwise true
+          (button
+            :class "iconcpu"
+            :limit-width 2
+            :tooltip "using ${CPU_USAGE}% CPU"
+            :onclick "command"
+            :show_truncated false
+            :wrap false
+              ""))))
+
+(defwidget clock []
+  (button :class "clock" :orientation "h" :halign "end" 
+    (label :text "${time.day}, ${time.hour}:${time.min}")))
+
+(defwidget power []
+  (eventbox :onhover "${eww} update power=true"
+            :onhoverlost "${eww} update power=false"
+    (box :space-evenly "false"
+         :vexpand "false"
+         :class "powermenu"
+      (revealer :transition "slideright"
+                :reveal power
+                :duration "700ms"
+        (box :space-evenly "false" :class "power-buttons"
+             (button :class "button-reb"
+                     :tooltip "Reboot"
+                     :onclick "reboot" "")
+             (button :class "button-quit"
+                     :tooltip "Logout"
+                     :onclick "hyprctl dispatch exit" "")
+             (button :class "button-lock"
+                     :tooltip "Lock Screen"
+                     :onclick "command lockscreen" "")))
+      (button :class "button-off"
+              :tooltip "Shutdown"
+              :onclick: "shutdown now" "⏻"))))
+                     
+(defvar power false)
+
+(defwidget sep []
+  (box :class "separator" :vexpand "false" :hexpand "false"
+       (label :class "separ" :text "󰇙")))
+
+(defwidget bar []
+  (centerbox :orientation "h"
+    (leftwidgets)
+    (clock)
+    (rightwidgets)))
+
+(defwindow bar
+  :monitor 0 ;; Optional for X11
+  :stacking "fg"
+  :windowtype "dock"
+  :geometry (geometry
+              :x "0%"
+              :y "0px"
+              :width "100%"
+              :height "35px"
+              :anchor "top center")
+  :exclusive true
+  :reserve (struts :side "top" :distance "2%")
+  (bar))

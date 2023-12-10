@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Capture the status
+status=$(amixer get Master | awk '/\[.*\]$/ {print $NF; exit}')
+
+# If status is off send volume = 0
+if [ "$status" == "[off]" ]; then
+	echo "0"
+else
+	volume=$(amixer get Master | awk -F'[][]' '/Front [LR]eft:/ { print $2 }' | tr -d '%')
+	echo $volume 
+fi
