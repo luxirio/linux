@@ -136,12 +136,6 @@ layouts = [
         float_rules=[
             # Run the utility of `xprop` to see the wm class and name of an X client.
             *layout.Floating.default_float_rules,
-            Match(wm_class="confirmreset"),  # gitk
-            Match(wm_class="makebranch"),  # gitk
-            Match(wm_class="maketag"),  # gitk
-            Match(wm_class="ssh-askpass"),  # ssh-askpass
-            Match(title="branchdialog"),  # gitk
-            Match(title="pinentry"),  # GPG key password entry
         ],
         border_focus = darkforest["grey"], border_width =3,
         border_normal = darkforest["bg_3"]
@@ -228,10 +222,10 @@ separator = widget.TextBox(
 def get_widgets(primary = False):
     widgets = [
         # Workspaces
-        separator,
         widget.Image(
-            filename='~/.config/qtile/icons/app-icon/cometa_blue.png',
-            margin=5,
+            filename='~/.config/qtile/icons/app-icon/trevo3.png',
+            margin_y=9,
+            margin_x=4,
             mouse_callbacks={'Button1': lazy.spawn("rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-11.rasi")},
             background=darkforest["background"],
             foreground=darkforest["grey"]
@@ -246,7 +240,7 @@ def get_widgets(primary = False):
             background = darkforest["background"],
             font="icomoon",
             fontsize = 12,
-            spacing =1,
+            spacing =0,
             active = darkforest["fg1"],
             highlight_color = [darkforest["bg_3"],darkforest["bg_3"]],
             this_current_screen_border = darkforest["green"],
@@ -261,7 +255,7 @@ def get_widgets(primary = False):
         ),
         widget.CurrentLayoutIcon(
             max_chars = 3,
-            scale = 0.45,
+            scale = 0.40,
             background = darkforest["background"],
             custom_icon_paths = [".config/qtile/icons/layout-icons"],
         ),
@@ -270,10 +264,9 @@ def get_widgets(primary = False):
             ),
         clockExpand(
             format = "%H:%M",
-            font="Iosevka Nerd Font Bold",
             foreground=darkforest["fg1"],
             background = darkforest["background"],
-            fontsize = 15,
+            fontsize = 14,
         ),
         widget.Spacer(
             background = darkforest["background"],
@@ -284,10 +277,11 @@ def get_widgets(primary = False):
         widget.GenPollText(
             func = lambda: subprocess.check_output('/home/gustavo/.config/eww/scripts/wifi --ICON', shell=True).decode('utf-8').strip(),
             fmt = '{}',
+            mouse_callbacks={'Button1': lazy.spawn("nm-connection-editor")},
             font="CaskaydiaCove Nerd Font Bold",
             fontsize=12,
-            padding=8,
-            update_interval=1,
+            padding=6,
+            update_interval=30,
             background=darkforest["background"],
             foreground=darkforest["fg1"],
         ),
@@ -312,7 +306,6 @@ def get_widgets(primary = False):
         widget.GenPollText(
             func = lambda: subprocess.check_output('/home/gustavo/.config/eww/scripts/getvol').decode('utf-8').strip(),
             fmt = '{}%',
-            font="CaskaydiaCove Nerd Font Bold",
             fontsize=12,
             update_interval=1,
             background=darkforest["background"],
@@ -346,6 +339,7 @@ def get_widgets(primary = False):
                     background=darkforest["background"],
                     foreground=darkforest["red"],
                     fontsize=13,
+                    update_interval=10,
                     **decoration_defaults
                 ),
             ],
@@ -410,6 +404,27 @@ follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
 
+floating_layout = layout.Floating(
+    float_rules=[
+        # Run the utility of `xprop` to see the wm class and name of an X client.
+        *layout.Floating.default_float_rules,
+        Match(wm_class="confirmreset"),  # gitk
+        Match(wm_class="confirm"),  # gitk
+        Match(wm_class="download"),  # gitk
+        Match(wm_class="dialog"),  # gitk
+        Match(wm_class="Places"),  # gitk
+        Match(wm_class="error"),  # gitk
+        Match(wm_class="nm-connection-editor"),  # gitk
+        Match(wm_class="maketag"),  # gitk
+        Match(title="branchdialog"),  # gitk
+        Match(wm_class="confirmreset"),  # gitk
+        Match(wm_class="ssh-askpass"),  # ssh-askpass
+        Match(title="pinentry"),  # GPG key password entry
+    ],
+    border_focus = darkforest["grey"],
+    border_normal = darkforest["background"],
+    border_width = 2,
+)
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
@@ -430,7 +445,7 @@ def setgroup():
             group.label = "" # Currently focused groups
         else:
             if group.windows:
-                group.label = ""  # Unfocused group, with windows
+                group.label = "" # Unfocused group, with windows
             else:
                 group.label = " "  # Unfocused, empty group
 

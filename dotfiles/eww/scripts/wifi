@@ -11,13 +11,13 @@ if [ $status ] ; then
 else
 	icon="󰤨"
 	text=" ${essid}"
-	col="#A7C080"
+	col="#dcd1bb"
 fi
 
 if [[ "$1" == "--COL" ]]; then
     echo $col	
 elif [[ "$1" == "--ESSID" ]]; then
 	echo $text
-elif [[ "$1" == "--ICON" ]]; then
+elif [[ "$1" ]]; then
 	echo $icon
 fi
